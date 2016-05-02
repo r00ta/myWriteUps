@@ -96,13 +96,13 @@ ok: we found the two random seed and and we were able to generate all the soluti
 >>> 
 >>> class SecurePrng(object):
 ...     def __init__(self):
-...             self.i = 0
+...         self.i = 0
 ...         self.p = 4646704883L
 ...         self.x = 3714993585 % self.p
 ...         self.y = 2248563082 % self.p
 ...     def next(self):
-...             print self.i
-...             self.i += 1
+...         print self.i
+...         self.i += 1
 ...         self.x = (2 * self.x + 3) % self.p
 ...         self.y = (3 * self.y + 9) % self.p
 ...         return (self.x ^ self.y)
