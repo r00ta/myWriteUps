@@ -51,15 +51,7 @@ $ hexdump -C dump1.raw | less
 ```
 I see that this is a dump of a VirtualBox instance,  by looking at `VBCORE` and `VBCPU` strings.
 
-Bad news: `volalitity` didn't work fine immediately. So i saw that
-```bash
-$ strings dump1.raw | grep WIN10
-IE11WIN10
-...
-```
-and in the volatility's official web page i read that it had a basic support for WIN10: i tried to modify the dump in order to solve the challenge with volatility, but after a while i decided not to spend more time on that way, infact i thought that even if i could run volatility i would have had problems due the basic support for WIN10.
-
-Good news: that's Google CTF and i know that `Rekall` is a project developed by Google: why don't try that new (for me) tool?
+I usually solve this kind of challenge with `volatility`, but honestly i had some problem that tool during the CTF. So i thought "why don't try `Rekall` this time"? 
 So i loaded the dump image into Rekall workspace
 ```bash
 $ Rekal -f dump1.raw
