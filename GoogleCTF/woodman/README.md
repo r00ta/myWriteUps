@@ -99,8 +99,8 @@ ok: we found the two random seed and and we were able to generate all the soluti
 ...     def __init__(self):
 ...             self.i = 0
 ...         self.p = 4646704883L
-...         self.x = 2550394427 % self.p
-...         self.y = 1994196750 % self.p
+...         self.x = 3714993585 % self.p
+...         self.y = 2248563082 % self.p
 ...     def next(self):
 ...             print self.i
 ...             self.i += 1
@@ -112,17 +112,33 @@ ok: we found the two random seed and and we were able to generate all the soluti
 ...     def getY(self):
 ...             return self.y
 ... 
+>>> 
 >>> mySol = SecurePrng()
+>>> print "x0 = " + str(mySol.getX())
+x0 = 3714993585
+>>> print "y0 = " + str(mySol.getY())
+y0 = 2248563082
 >>> print mySol.next()
 0
-1418673094
+3640553926
+>>> print "x1 = " + str(mySol.getX())
+x1 = 2783282290
+>>> print "y1 = " + str(mySol.getY())
+y1 = 2098984372
 >>> print mySol.next()
 1
-3640553926
+1418673094
 >>> print mySol.next()
 2
-3472020575
+2142807111
+>>> print mySol.next()
+3
+3977384148
 ...
+...
+>>> print mySol.next()
+100
+31332507
 ```
 After 100 step we get the flag
 CTF{_!_aRe_y0U_tH3_NSA_:-?_!_}
