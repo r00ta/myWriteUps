@@ -73,9 +73,9 @@ while s.check() == sat:
 	myObj = SecurePrng(int(str(m[x]))%pMy,int(str(m[y]))%pMy)
 	mySol1 = myObj.next()
 	mySol2 = myObj.next()
-	if mySol1 == s1cor and mySol2 == s2cor:
+	if mySol1 == s1cor and mySol2 == s2cor and int(str(m[x]))<= pMy and int(str(m[y])) <= pMy :
 		print "x = " + str(m[x]) + " ; y = " + str(m[y]) 
-	s.add(Or(x != s.model()[x], y != s.model()[y])) # prevent next model from using the same assignment as a previous model
+	s.add(Or(x != s.model()[x], y != s.model()[y]))
 ```
 
 just few notes: there are more than one solution of that system, so we check every solution that z3 proposes.
@@ -85,7 +85,6 @@ Run that shit!
 ```bash
 $ time python solver.py 3640553926 1418673094
 x = 3714993585 ; y = 2248563082
-x = 8361698468 ; y = 2248563082
 
 real	0m0.591s
 user	0m0.556s
