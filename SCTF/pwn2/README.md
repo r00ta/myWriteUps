@@ -25,11 +25,12 @@ How many bytes do you want me to read? -1
 Ok, sounds good. Give me 4294967295 bytes of data!
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBB                                      
 You said: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBB
-''''
+```
 
 and see `dmesg`
 
 ```bash
+$ dmesg
 ..
 ..
 ..
@@ -42,7 +43,7 @@ When we get control of EIP registers are (note that EAX and ECX depends on the l
 
 `ROPgadget`, please give us good news!
 ```bash
-ROPgadget --binary pwn2
+$ ROPgadget --binary pwn2
 Gadgets information
 ============================================================
 0x08048833 : adc al, 0x41 ; ret
@@ -174,10 +175,12 @@ Unique gadgets found: 123
 
 So we have some good gadgets like `inc eax ; ret` & company, also a `0x080484d0 : int 0x80`.
 So our exploit consists in: 
+
 1) Read "/bin/sh" with a system call `read` writing this string in BSS
+
 2) execute execve("/bin/sh") system call
 
-But this is not so easy: we have to set `EAX = 3` and `ECX = BSS address`: we have to look for a gadget that give us `EAX = 0`. With the gadget that `ROPgadget` gives us it is impossible: so we look for gadget manually. What about that? 
+But this is not so easy: we have to set `EAX = 3` and `ECX = BSS address`: we have to look for a gadget that give us `EAX = 0`. With the gadgets that `ROPgadget` gives us it is impossible: so we have to look for gadgets manually. What about that? 
 
 ![EAX](EAX.png)
 
