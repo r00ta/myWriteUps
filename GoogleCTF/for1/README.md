@@ -51,7 +51,7 @@ $ hexdump -C dump1.raw | less
 ```
 I see that this is a dump of a VirtualBox instance,  by looking at `VBCORE` and `VBCPU` strings.
 
-I usually solve this kind of challenge with `volatility`, but honestly i had some problem that tool during the CTF. So i thought "why don't try `Rekall` this time"? 
+I usually solve this kind of challenge with `volatility`, but honestly i had some problem with that tool during the CTF. So i thought "why don't try `Rekall` this time"? 
 So i loaded the dump image into Rekall workspace
 ```bash
 $ Rekal -f dump1.raw

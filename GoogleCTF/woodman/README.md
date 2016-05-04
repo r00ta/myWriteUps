@@ -73,9 +73,9 @@ while s.check() == sat:
 	myObj = SecurePrng(int(str(m[x]))%pMy,int(str(m[y]))%pMy)
 	mySol1 = myObj.next()
 	mySol2 = myObj.next()
-	if mySol1 == s1cor and mySol2 == s2cor:
+	if mySol1 == s1cor and mySol2 == s2cor and int(str(m[x]))<= pMy and int(str(m[y])) <= pMy :
 		print "x = " + str(m[x]) + " ; y = " + str(m[y]) 
-	s.add(Or(x != s.model()[x], y != s.model()[y])) # prevent next model from using the same assignment as a previous model
+	s.add(Or(x != s.model()[x], y != s.model()[y]))
 ```
 
 just few notes: there are more than one solution of that system, so we check every solution that z3 proposes.
@@ -85,7 +85,6 @@ Run that shit!
 ```bash
 $ time python solver.py 3640553926 1418673094
 x = 3714993585 ; y = 2248563082
-x = 8361698468 ; y = 2248563082
 
 real	0m0.591s
 user	0m0.556s
@@ -97,13 +96,13 @@ ok: we found the two random seed and and we were able to generate all the soluti
 >>> 
 >>> class SecurePrng(object):
 ...     def __init__(self):
-...             self.i = 0
+...         self.i = 0
 ...         self.p = 4646704883L
 ...         self.x = 3714993585 % self.p
 ...         self.y = 2248563082 % self.p
 ...     def next(self):
-...             print self.i
-...             self.i += 1
+...         print self.i
+...         self.i += 1
 ...         self.x = (2 * self.x + 3) % self.p
 ...         self.y = (3 * self.y + 9) % self.p
 ...         return (self.x ^ self.y)
