@@ -1,4 +1,4 @@
-# pwn2 - SCTF 2016
+# EspeciallyGoodJmps [75] -TUCTF 2016
 
 First of all execute `file` command
 ```bash
