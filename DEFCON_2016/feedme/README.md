@@ -1,8 +1,9 @@
 #feedme - DEFCON 2016
 
 First at all execute `file` command on the binary
-```
-
+```bash
+$ file feedme 
+feedme: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), statically linked, for GNU/Linux 2.6.24, stripped
 ```
 
 and with `checksec` we see that NX is enabled and debugging a little bit we realize that the usage of the binary is simple: a "parent" process launches child processes that takes 1 byte `x`, than reads `x` number of bytes. But the length of the buffer is 32, so if we send "\x36" + "A"*0x36 the canary is overwritten and smash the stack detected. 
