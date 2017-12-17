@@ -1,4 +1,4 @@
-#guessme - 0x00CTF 2017
+# guessme - 0x00CTF 2017
 
 First at all execute `file` command on the binary
 ```bash

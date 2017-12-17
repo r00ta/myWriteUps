@@ -1,4 +1,4 @@
-#left - 0x00CTF 2017
+# left - 0x00CTF 2017
 
 First at all execute `file` command on the binary (the libc is already provided by the organizers of the CTF)
 ```bash

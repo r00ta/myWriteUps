@@ -1,4 +1,4 @@
-#hello - 0x00CTF 2017
+# hello - 0x00CTF 2017
 
 First at all execute `file` command on the binary
 
