@@ -113,7 +113,7 @@ struct exit_function_list *__exit_funcs = &initial;
 
 then the libc uses these two functions to add an internal `atexit` function to be called when the program ends
 
-```
+```C
 int
 attribute_hidden
 __internal_atexit (void (*func) (void *), void *arg, void *d,
@@ -199,11 +199,11 @@ It uses `&__exit_funcs`, i.e `&initial`! In the file `libc-start.c` you can figu
 ``` 
 
 What we can do is: 
-0. We have the leak of the libc location. We can find the address of the magic gadget, the address of `initial` structure and everithing we need
-1. leak the value of the encrypted pointer `_dl_fini_enc`
-2. get the secret key (working with 64 bits) with  `rol(_dl_fini_enc, 0x11) ^ _dl_fini_address`.
-3. overwrite the pointer `_dl_fini_enc` with the encrypted magic gadget address calculated with `rol((magic_addr) ^ (key), 0x11, 64 )`
-4. WIN!
+1. We have the leak of the libc location. We can find the address of the magic gadget, the address of `initial` structure and everithing we need
+2. leak the value of the encrypted pointer `_dl_fini_enc`
+3. get the secret key (working with 64 bits) with  `rol(_dl_fini_enc, 0x11) ^ _dl_fini_address`.
+4. overwrite the pointer `_dl_fini_enc` with the encrypted magic gadget address calculated with `rol((magic_addr) ^ (key), 0x11, 64 )`
+5. WIN!
 
 ```bash
 $ python exploit.py 159.203.116.12 7777
