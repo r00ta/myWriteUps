@@ -1,6 +1,6 @@
 # left - 0x00CTF 2017
 
-First at all execute `file` command on the binary (the libc is already provided by the organizers of the CTF)
+First of all execute `file` command on the binary (the libc is already provided by the organizers of the CTF)
 ```bash
 $ file guessme
 guessme: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=92b1d84ee22b7c92dc80fac971bdc7f6cd0e3672, stripped
@@ -21,12 +21,12 @@ This was a 250 pts pwnable challange, the hardest of the competition. Unfortunat
 
 ![image](binary.png)
 
-I tried really a lot of exploits: 
+I tried really a lot of exploits:
 1. overwrite an entry in the got. Nope, full RELRO :P
 2. use the `atexit` pointers. Nope, read only
-3. use the `__free_hook` pointers. The `exit` function in certain cases calls the `free`, so i tried for few hours to follow this strategy but without success. 
+3. use the `__free_hook` pointers. The `exit` function in certain cases calls the `free`, so i tried for few hours to follow this strategy but without success.
 
-I was becoming crazy, but with my teammate @[ret2libc](https://github.com/ret2libc) we had a look at the libc code and found another way to exploit it. And i'll try to explain now what happened. 
+I was becoming crazy, but with my teammate @[ret2libc](https://github.com/ret2libc) we had a look at the libc code and found another way to exploit it. And i'll try to explain now what happened.
 
 The `exit` function calls `__run_exit_handlers` function, and this is its implementation
 
@@ -104,7 +104,7 @@ __run_exit_handlers (int status, struct exit_function_list **listp,
 }
 ```
 
-A parameter of the `__run_exit_handlers` is a `struct exit_function_list **listp`. The libc initializes a static struct `initial` 
+A parameter of the `__run_exit_handlers` is a `struct exit_function_list **listp`. The libc initializes a static struct `initial`
 
 ```C
 static struct exit_function_list initial;
@@ -180,7 +180,7 @@ exit (int status)
 libc_hidden_def (exit)
 ```
 
-It uses `&__exit_funcs`, i.e `&initial`! In the file `libc-start.c` you can figure out that it uses the function `__cxa_atexit` to add a function: `_dl_fini`: 
+It uses `&__exit_funcs`, i.e `&initial`! In the file `libc-start.c` you can figure out that it uses the function `__cxa_atexit` to add a function: `_dl_fini`:
 
 ```C
 /* Register the destructor of the dynamic linker if there is any.  */
@@ -196,9 +196,9 @@ It uses `&__exit_funcs`, i.e `&initial`! In the file `libc-start.c` you can figu
   /* Register the destructor of the program, if any.  */
   if (fini)
     __cxa_atexit ((void (*) (void *)) fini, NULL, NULL);
-``` 
+```
 
-What we can do is: 
+What we can do is:
 1. We have the leak of the libc location. We can find the address of the magic gadget, the address of `initial` structure and everithing we need
 2. leak the value of the encrypted pointer `_dl_fini_enc`
 3. get the secret key (working with 64 bits) with  `rol(_dl_fini_enc, 0x11) ^ _dl_fini_address`.
@@ -219,4 +219,4 @@ cat /home/left/flag.txt
 0x00CTF{exPL0it1ng__EXit_FUNkz_LikE_4b0sZ!}
 ```
 
-Find the binary [here](left) (and the related [libc](libc-2.23.so)), the full exploit [here](exploit.py)! I really enjoyed this challenge! 
+Find the binary [here](left) (and the related [libc](libc-2.23.so)), the full exploit [here](exploit.py)! I really enjoyed this challenge!

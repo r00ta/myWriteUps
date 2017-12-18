@@ -1,6 +1,6 @@
 # c1 - 0x00CTF 2017
 
-First at all execute `file` command on the binary
+First of all execute `file` command on the binary
 
 ```bash
 $ file c4
@@ -27,7 +27,7 @@ Look at the `while` loop
 
 we just need to execute the `printf` functions, i.e. process the entire user input successfully. It's quite weird, because if we just send `\n` as input we can printf a flag of course
 
-```bash 
+```bash
 $ ./c4
 Program protected by HexaPass(TM)
 
@@ -92,4 +92,4 @@ Crackme by pico
 ```
 
 
-Find the binary [here](c4)! 
+Find the binary [here](c4)!

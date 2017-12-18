@@ -1,6 +1,6 @@
 # hello - 0x00CTF 2017
 
-First at all execute `file` command on the binary
+First of all execute `file` command on the binary
 
 ```bash
 $ file hello
@@ -16,7 +16,7 @@ Password: hello
 Keep Trying!
 ```
 
-The ELF is corrupted and it's not trivial to perform a dymanic analysis of the crackme. So let's do it statically! The static analysis was quite easy, the binary just xor each char of the user input with a byte in the .bss and checks if it's equal to a certain value. 
+The ELF is corrupted and it's not trivial to perform a dymanic analysis of the crackme. So let's do it statically! The static analysis was quite easy, the binary just xor each char of the user input with a byte in the .bss and checks if it's equal to a certain value.
 In this image i show just the first part of the function that checks the key (the rest of the key trivial)
 
 ![image](check.png)
@@ -43,4 +43,4 @@ Password: 1nItG0T!
 0x00CTF{0bfU5c473D_PtR4Z3}
 ```
 
-Find the binary [here](hello)! 
+Find the binary [here](hello)!
