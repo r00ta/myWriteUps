@@ -60,7 +60,7 @@ Let's have a look at the `bss` and at the pointers that we can overwrite (i repo
 No way: we have to figure out how to use those pointers and print the flag at address `0x6B4040`. I went through the printf implementation in the libc trying to figure out how to
 use some of those pointers to get control of the program. After some hours i found this (for details of the procedure please see references and comments inside the code of libc):
 
-1) `printf` calls `vfprintf` (see the implementation of the `vfprintf` ![here](https://code.woboq.org/userspace/glibc/stdio-common/vfprintf.c.html#1243))
+1) `printf` calls `vfprintf` (see the implementation of the `vfprintf` [here](https://code.woboq.org/userspace/glibc/stdio-common/vfprintf.c.html#1243)
 2) look at this snippet:
 ```C
 	  /* Use the slow path in case any printf handler is registered.  */
@@ -69,10 +69,9 @@ use some of those pointers to get control of the program. After some hours i fou
 	                        || __printf_va_arg_table != NULL))
 	    goto do_positional;
 ```
-
 Remember that we control these pointers, so we can go to `do_positional` label if we want ;)
 3) `do_positional` calls `printf_positional`
-4) `printf_positional` calls `__parse_one_specwc` function, and now things become interesting (see `__parse_one_specwc` implementation [here](https://code.woboq.org/userspace/glibc/stdio-common/printf-parsemb.c.html))
+4) `printf_positional` calls `__parse_one_specwc` function, and now things become interesting. See `__parse_one_specwc` implementation [here](https://code.woboq.org/userspace/glibc/stdio-common/printf-parsemb.c.html)
 5)  look at this portion of code inside `__parse_one_specwc`:
 ```C
 	  if (__builtin_expect (__printf_function_table == NULL, 1)
