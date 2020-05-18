@@ -49,4 +49,4 @@ with open('payload.txt', "wb") as f:
 
 Use some pro bash commands to interact with the server, see the video below :) 
 
-
+https://www.youtube.com/watch?v=_OJLPW5O7xo
