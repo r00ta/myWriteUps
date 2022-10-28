@@ -10,8 +10,12 @@ Requirements:
 
 The application register an handler for the signals from `1` to `64`: the handler xors the user's input with the signal code depending with an offset controlled by a global variable. 
 
+![Screenshot from 2022-10-28 19-17-24](https://user-images.githubusercontent.com/18282531/198697418-186c296a-5334-45b4-bb9a-8dddc9ca8a78.png)
+
 
 The application reads the signal to be raised and updates the global offset at every loop. After `2653*46` loops, the application `memcmp` the xored user's input with a fixed string stored in the memory. 
+
+![Screenshot from 2022-10-28 19-23-22](https://user-images.githubusercontent.com/18282531/198697425-3ea46937-ec93-4c58-8b85-c269be0ebc97.png)
 
 ## Solution 
 
